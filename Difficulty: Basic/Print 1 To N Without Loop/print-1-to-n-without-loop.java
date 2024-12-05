@@ -51,8 +51,6 @@ class Solution
           
         }
         else{
-           
-          
              printNos(N-1);
                System.out.print(N+" ");
         }
