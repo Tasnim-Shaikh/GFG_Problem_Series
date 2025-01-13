@@ -27,21 +27,33 @@ public class Main {
 class Solution {
     public int getSecondLargest(int[] arr) {
         // Code Here
-        int firstmax=0;
-        for(int i=0;i<arr.length;i++){
-            if(arr[i]>firstmax){
-                firstmax=arr[i];
+        //Approach 1:Brute Force Approach
+        Arrays.sort(arr);
+        int n=arr.length;
+        int smallest=-1;
+        int largest=arr[n-1];
+        for(int i=n-2;i>=0;i--){
+            if(arr[i]!=largest){
+                smallest=arr[i];
+                break;
             }
         }
-        int secondmax=0;
-        for(int i=0;i<arr.length;i++){
-            if(arr[i]<firstmax && arr[i]>secondmax){
-                secondmax=arr[i];
-            }
-        }
-        if(secondmax==0)
-        return -1;
-        else
-        return secondmax;
+        return smallest;
+        // int firstmax=0;
+        // for(int i=0;i<arr.length;i++){
+        //     if(arr[i]>firstmax){
+        //         firstmax=arr[i];
+        //     }
+        // }
+        // int secondmax=0;
+        // for(int i=0;i<arr.length;i++){
+        //     if(arr[i]<firstmax && arr[i]>secondmax){
+        //         secondmax=arr[i];
+        //     }
+        // }
+        // if(secondmax==0)
+        // return -1;
+        // else
+        // return secondmax;
     }
 }
