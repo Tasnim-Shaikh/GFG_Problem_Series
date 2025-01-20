@@ -34,26 +34,49 @@ class Main {
 class Solution {
     public int longestSubarray(int[] arr, int k) {
         // code here
+    //   HashMap<Integer, Integer> map = new HashMap<>();
+    //     int currSum = 0; // Cumulative sum
+    //     int maxLength = 0; // To track the longest subarray length
+
+    //     for (int i = 0; i < arr.length; i++) {
+    //         currSum += arr[i];
+
+    //         // If the cumulative sum equals k, update maxLength
+    //         if (currSum == k) {
+    //             maxLength = i + 1;
+    //         }
+
+    //         // If (currSum - k) is in the map, update maxLength
+    //         if (map.containsKey(currSum - k)) {
+    //             maxLength = Math.max(maxLength, i - map.get(currSum - k));
+    //         }
+
+    //         // If currSum is not already in the map, add it
+    //         map.putIfAbsent(currSum, i);
+    //     }
+    //     return maxLength;  
+    
+    
+    
+    
        HashMap<Integer, Integer> map = new HashMap<>();
-        int currSum = 0; // Cumulative sum
-        int maxLength = 0; // To track the longest subarray length
-
-        for (int i = 0; i < arr.length; i++) {
-            currSum += arr[i];
-
-            // If the cumulative sum equals k, update maxLength
-            if (currSum == k) {
-                maxLength = i + 1;
+        int len=0;
+        int sum=0;
+        int n=arr.length;
+        for(int i=0;i<n;i++){
+            sum+=arr[i];
+            if(sum==k){
+                len=Math.max(len,i+1);
             }
-
-            // If (currSum - k) is in the map, update maxLength
-            if (map.containsKey(currSum - k)) {
-                maxLength = Math.max(maxLength, i - map.get(currSum - k));
+            int rem=sum-k;
+            if(map.containsKey(rem)){
+                int r=i-map.get(rem);
+                len=Math.max(len,r);
             }
-
-            // If currSum is not already in the map, add it
-            map.putIfAbsent(currSum, i);
+            if(!map.containsKey(sum)){
+                map.put(sum,i);
+            }
         }
-        return maxLength;  
+        return len;
     }
 }
