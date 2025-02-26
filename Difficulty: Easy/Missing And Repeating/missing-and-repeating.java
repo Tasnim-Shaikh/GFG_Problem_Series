@@ -90,27 +90,46 @@ class Solution {
         
         
         //Approach 2:
-        int n=arr.length;
-        int repeat=-1;
-        int missing=-1;
-        int hash[]=new int[n+1];
+        // int n=arr.length;
+        // int repeat=-1;
+        // int missing=-1;
+        // int hash[]=new int[n+1];
+        // for(int i=0;i<n;i++){
+        //     hash[arr[i]]++;
+        // }
+        // for(int i=1;i<hash.length;i++){
+        //     if(hash[i]==2){
+        //         repeat=i;
+        //     }
+        //     else if(hash[i]==0){
+        //         missing=i;
+        //     }
+        // }
+        // ArrayList<Integer> list=new ArrayList<>();
+        // list.add(repeat);
+        // list.add(missing);
+        // return list;
+        
+        
+        
+        //Approach 3:
+        long n=arr.length;
+        long sumN = (n * (n + 1)) / 2;
+        long sqN = (n * (n + 1) * (2 * n + 1)) / 6;
+        long sum1=0;
+        long sq1=0;
         for(int i=0;i<n;i++){
-            hash[arr[i]]++;
+            sum1+=arr[i];
+            sq1+=(long)arr[i]*(long)arr[i];
         }
-        for(int i=1;i<hash.length;i++){
-            if(hash[i]==2){
-                repeat=i;
-            }
-            else if(hash[i]==0){
-                missing=i;
-            }
-        }
+        long val1=sum1-sumN;
+        long val2=sq1-sqN;
+        val2=val2/val1;
+        long x=(val1+val2)/2;
+        long y=x-val1;
         ArrayList<Integer> list=new ArrayList<>();
-        list.add(repeat);
-        list.add(missing);
+        list.add((int)x);
+        list.add((int)y);
         return list;
-        
-        
-        
     }
 }
