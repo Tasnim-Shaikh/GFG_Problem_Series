@@ -22,75 +22,59 @@ class Sorting {
 
 class Solution {
     // Function to count inversions in the array.
-    // static int inversionCount(int arr[]) {
-    //     // Your Code Here
-    //     int count=0;
-    //     int n=arr.length;
-    //     for(int i=0;i<n;i++){
-    //         for(int j=i+1;j<n;j++){
-    //             if(arr[i]>arr[j]&&i<j){
-    //                 count++;
-    //             }
-    //         }
-    //     }
+    static int inversionCount(int arr[]) {
+       // Your Code Here
+      int n=arr.length;
+    //   int count=0;
+    //   for(int i=0;i<n;i++){
+    //       for(int j=i+1;j<n;j++){
+    //           if(arr[i]>arr[j] && i<j){
+    //               count++;
+    //           }
+    //       }
+    //   }
     //     return count;
-    // }
-    static int inversionCount(int[] arr) {
-    int n = arr.length;
-    int[] temp = new int[n];
-    return mergeSortAndCount(arr, temp, 0, n - 1);
-}
-
-static int mergeSortAndCount(int[] arr, int[] temp, int left, int right) {
-    int mid, invCount = 0;
-    if (left < right) {
-        mid = left + (right - left) / 2;
-
-        // Count inversions in the left half
-        invCount += mergeSortAndCount(arr, temp, left, mid);
-
-        // Count inversions in the right half
-        invCount += mergeSortAndCount(arr, temp, mid + 1, right);
-
-        // Count split inversions and merge the two halves
-        invCount += mergeAndCount(arr, temp, left, mid, right);
+    
+        return mergesort(arr,0,n-1);
     }
-    return invCount;
-}
-
-static int mergeAndCount(int[] arr, int[] temp, int left, int mid, int right) {
-    int i = left;     // Left subarray index
-    int j = mid + 1;  // Right subarray index
-    int k = left;     // Temp array index
-    int invCount = 0;
-
-    // Merge the two halves while counting inversions
-    while (i <= mid && j <= right) {
-        if (arr[i] <= arr[j]) {
-            temp[k++] = arr[i++];
-        } else {
-            temp[k++] = arr[j++];
-            // All elements from arr[i] to arr[mid] are greater than arr[j]
-            invCount += (mid - i + 1);
+    static int mergesort(int arr[],int low,int high){
+        int count=0;
+        if(low>=high){
+            return count;
         }
+        int mid=(low+high)/2;
+        count+=mergesort(arr,low,mid);
+        count+=mergesort(arr,mid+1,high);
+        count+=merge(arr,low,mid,high);
+        return count;
     }
-
-    // Copy remaining elements of the left subarray
-    while (i <= mid) {
-        temp[k++] = arr[i++];
+    static int merge(int arr[],int low,int mid,int high){
+        ArrayList<Integer> temp=new ArrayList<>();
+        int left=low;
+        int right=mid+1;
+        int count=0;
+        while(left<=mid && right<=high){
+            if(arr[left]<=arr[right]){
+            temp.add(arr[left]);
+            left++;
+        }
+        else {
+            temp.add(arr[right]);
+            count+=(mid-left+1);
+            right++;
+        }
+        }
+        while(left<=mid){
+            temp.add(arr[left]);
+            left++;
+        }
+        while(right<=high){
+            temp.add(arr[right]);
+            right++;
+        }
+        for(int i=low;i<=high;i++){
+            arr[i]=temp.get(i-low);
+        }
+        return count;
     }
-
-    // Copy remaining elements of the right subarray
-    while (j <= right) {
-        temp[k++] = arr[j++];
-    }
-
-    // Copy sorted subarray back to the original array
-    for (i = left; i <= right; i++) {
-        arr[i] = temp[i];
-    }
-
-    return invCount;
-}
-
 }
