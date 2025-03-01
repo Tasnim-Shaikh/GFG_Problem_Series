@@ -51,17 +51,29 @@ class Solution {
     void selectionSort(int[] arr) {
         // code here
         int n=arr.length;
+        // for(int i=0;i<n;i++){
+        //     int k=0;
+        //     int last=n-i-1;
+        //     for(int j=0;j<=last;j++){
+        //         if(arr[j]>arr[k]){
+        //             k=j;
+        //         }
+        //     }
+        //     int temp=arr[k];
+        //     arr[k]=arr[last];
+        //     arr[last]=temp;
+        // }
+        
         for(int i=0;i<n;i++){
-            int k=0;
-            int last=n-i-1;
-            for(int j=0;j<=last;j++){
-                if(arr[j]>arr[k]){
+            int k=i;
+            for(int j=i;j<n;j++){
+                if(arr[k]>arr[j]){
                     k=j;
                 }
             }
             int temp=arr[k];
-            arr[k]=arr[last];
-            arr[last]=temp;
+            arr[k]=arr[i];
+            arr[i]=temp;
         }
     }
 }
