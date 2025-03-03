@@ -55,10 +55,10 @@ class Solution {
         // return sum;
         
         int maxSum = Integer.MIN_VALUE; // Initialize with the smallest possible integer
-    for (int i = 0; i < arr.length - 1; i++) { // Loop through the array
-        int currentSum = arr[i] + arr[i + 1]; // Calculate sum of adjacent elements
-        maxSum = Math.max(maxSum, currentSum); // Update maxSum if currentSum is greater
-    }
-    return maxSum; 
+        for (int i = 0; i < arr.length - 1; i++) { // Loop through the array
+            int currentSum = arr[i] + arr[i + 1]; // Calculate sum of adjacent elements
+            maxSum = Math.max(maxSum, currentSum); // Update maxSum if currentSum is greater
+        }
+        return maxSum; 
     }
 }
