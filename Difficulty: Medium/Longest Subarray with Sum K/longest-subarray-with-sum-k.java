@@ -34,31 +34,7 @@ class Main {
 class Solution {
     public int longestSubarray(int[] arr, int k) {
         // code here
-    //   HashMap<Integer, Integer> map = new HashMap<>();
-    //     int currSum = 0; // Cumulative sum
-    //     int maxLength = 0; // To track the longest subarray length
-
-    //     for (int i = 0; i < arr.length; i++) {
-    //         currSum += arr[i];
-
-    //         // If the cumulative sum equals k, update maxLength
-    //         if (currSum == k) {
-    //             maxLength = i + 1;
-    //         }
-
-    //         // If (currSum - k) is in the map, update maxLength
-    //         if (map.containsKey(currSum - k)) {
-    //             maxLength = Math.max(maxLength, i - map.get(currSum - k));
-    //         }
-
-    //         // If currSum is not already in the map, add it
-    //         map.putIfAbsent(currSum, i);
-    //     }
-    //     return maxLength;  
-    
-    
-    
-    
+    //Approach 2:Better
        HashMap<Integer, Integer> map = new HashMap<>();
         int len=0;
         int sum=0;
