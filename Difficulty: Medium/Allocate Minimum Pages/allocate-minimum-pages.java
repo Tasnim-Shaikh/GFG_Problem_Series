@@ -35,61 +35,51 @@ class GFG {
 class Solution {
     public static int findPages(int[] arr, int k) {
         // code here
-          int n = arr.length;
-
-        // If the number of students is more than the number of books, allocation is not possible
-        if (k > n) {
-            return -1;
+        int n=arr.length;
+        int sum=0;
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++){
+            if(arr[i]>max)max=arr[i];
+            sum+=arr[i];
         }
-
-        int low = Integer.MIN_VALUE; // Minimum possible value (max pages in a single book)
-        int high = 0; // Sum of all pages
-
-        for (int pages : arr) {
-            low = Math.max(low, pages); // The minimum value in binary search
-            high += pages; // The maximum value in binary search
-        }
-
-        int result = -1;
-
-        // Binary search to find the minimum maximum number of pages
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-
-            if (isFeasible(arr, n, k, mid)) {
-                result = mid; // Update result to current mid
-                high = mid - 1; // Try for a smaller maximum
-            } else {
-                low = mid + 1; // Try for a larger maximum
+        if(k>n)return -1;
+        //Approach 1:
+        //     for(int i=max;i<=sum;i++){
+        //         if(minimumpages(i,arr)<=k){
+        //             return i;
+        //         }
+        //     }
+        // return max;
+        
+        //Approach 2:
+        int low=max;
+        int high=sum;
+        int re=0;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int ans=minimumpages(mid,arr);
+            if(ans<=k){
+                re=mid;
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
             }
         }
-
-        return result;
+        return re;
     }
-
-    private static boolean isFeasible(int[] arr, int n, int k, int mid) {
-        int studentsRequired = 1;
-        int currentSum = 0;
-
-        for (int i = 0; i < n; i++) {
-            if (arr[i] > mid) {
-                return false; // If a single book has more pages than mid, allocation is not possible
+    static int minimumpages(int p,int arr[]){
+        int stud=1;
+        int pg=0;
+        for(int i=0;i<arr.length;i++){
+            if(pg+arr[i]<=p){
+                pg+=arr[i];
             }
-
-            if (currentSum + arr[i] > mid) {
-                // Assign to a new student
-                studentsRequired++;
-                currentSum = arr[i];
-
-                if (studentsRequired > k) {
-                    return false; // More students required than available
-                }
-            } else {
-                currentSum += arr[i];
+            else{
+                stud++;
+                pg=arr[i];
             }
         }
-
-        return true;
+        return stud;
     }
-    
 }
