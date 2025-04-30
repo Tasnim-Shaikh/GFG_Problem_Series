@@ -39,17 +39,34 @@ class GFG {
 class Solution {
     public int kthElement(int a[], int b[], int k) {
         // code here
-        int n=a.length+b.length;
-        int arr[]=new int[n];
-        for(int i=0;i<a.length;i++){
-            arr[i]=a[i];
-        }
-        int m=a.length;
-        for(int i=0;i<b.length;i++){
-            arr[m]=b[i];
-            m++;
-        }
-        Arrays.sort(arr);
-        return arr[k-1];
+         int n1=a.length;
+          int n2=b.length;
+          int i=0;
+          int j=0;
+          int cnt=1;
+          int ele=-1;
+          while(i<n1 && j<n2){
+            if(a[i]<b[j]){
+                if(cnt==k)ele=a[i];
+                i++;
+                cnt++;
+            }
+            else{
+                if(cnt==k)ele=b[j];
+                j++;
+                cnt++;
+            }
+          }
+          while(i<n1){
+             if(cnt==k)ele=a[i];
+                i++;
+                cnt++;
+          }
+          while(j<n2){
+             if(cnt==k)ele=b[j];
+                j++;
+                cnt++;
+          }
+        return ele;
     }
 }
