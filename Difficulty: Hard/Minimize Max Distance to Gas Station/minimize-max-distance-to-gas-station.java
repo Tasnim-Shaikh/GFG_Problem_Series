@@ -44,6 +44,7 @@ class Solution {
     public static double findSmallestMaxDist(int stations[], int k) {
         // code here
         int n=stations.length;
+        //Approach 1:Brute Force
         // int diff;
         // double slen=0;
         // int hm[]=new int[n-1];
@@ -69,19 +70,52 @@ class Solution {
         // }
         // return max;
         
-        PriorityQueue<pair> pq = new PriorityQueue<>((a, b) -> Double.compare(b.first, a.first));    
-        int hm[]=new int[n-1];
-        for(int i=0;i<n-1;i++){
-            pq.add(new pair(stations[i+1]-stations[i],i));
+        
+        //Approach 2:Better Approach
+        // PriorityQueue<pair> pq = new PriorityQueue<>((a, b) -> Double.compare(b.first, a.first));    
+        // int hm[]=new int[n-1];
+        // for(int i=0;i<n-1;i++){
+        //     pq.add(new pair(stations[i+1]-stations[i],i));
+        // }
+        // for(int gs=1;gs<=k;gs++){
+        //     pair tp=pq.poll();
+        //     int secind=tp.second;
+        //     hm[secind]++;
+        //     double diff=stations[secind+1]-stations[secind];
+        //     double seclen=diff/(double)(hm[secind]+1);
+        //     pq.add(new pair(seclen,secind));
+        // }
+        // return pq.peek().first;
+        
+        
+        //Approach 3:
+        double low=0;
+        double high=0;
+        for(int i=1;i<n-1;i++){
+            high=Math.max(stations[i]-stations[i-1],high);
         }
-        for(int gs=1;gs<=k;gs++){
-            pair tp=pq.poll();
-            int secind=tp.second;
-            hm[secind]++;
-            double diff=stations[secind+1]-stations[secind];
-            double seclen=diff/(double)(hm[secind]+1);
-            pq.add(new pair(seclen,secind));
+        double limit=1e-6;
+        while(high-low>limit){
+            double mid=(low+high)/2.0;
+            double ans=checkstation(mid,stations);
+            if(ans>k){
+                low=mid;
+            }
+            else{
+                high=mid;
+            }
         }
-        return pq.peek().first;
+        return high;
+    }
+    static double checkstation(double mid,int arr[]){
+        double cnt=0;
+        for(int i=1;i<arr.length;i++){
+            int diff=(int)((arr[i]-arr[i-1])/mid);
+            if(arr[i]-arr[i-1]==mid*diff){
+                diff--;
+            }
+            cnt+=diff;
+        }
+        return cnt;
     }
 }
