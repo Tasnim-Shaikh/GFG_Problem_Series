@@ -21,30 +21,22 @@ class Solution {
         }
         for(int i=0;i<V;i++){
             if(!vis[i]){
-                if(checkcycle(i,V,adj,vis))return true;
+                if(dfs(i,-1,adj,vis))return true;
             }
         }
         return false;
     }
-    boolean checkcycle(int src,int V,ArrayList<ArrayList<Integer>> adj,boolean vis[]){
+    boolean dfs(int node,int parent,ArrayList<ArrayList<Integer>> adj,boolean vis[]){
         // boolean vis[]=new boolean[V];
-        Queue<pair> q=new LinkedList<>();
-        q.offer(new pair(src,-1));
-        vis[src]=true;
-        while(!q.isEmpty()){
-            int node=q.peek().node;
-            int parent=q.peek().parent;
-            q.poll();
-            for(int n:adj.get(node)){
-                if(!vis[n]){
-                    vis[n]=true;
-                    q.offer(new pair(n,node));
-                }
-                else if(n!=parent){
-                    return true;
-                }
+        vis[node]=true;
+        for(int n:adj.get(node)){
+            if(!vis[n]){
+                vis[n]=true;
+                if(dfs(n,node,adj,vis))return true;
             }
-            
+            else if(n!=parent){
+                return true;
+            }
         }
         return false;
     }
